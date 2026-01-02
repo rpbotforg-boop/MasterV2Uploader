@@ -2,8 +2,9 @@ aiofiles
 aiohttp
 yt-dlp
 pyromod
-TgCrypto==1.2.5
-pyrogram
-xmltodict 
-requests 
+tgcrypto==1.2.5
+pyrogram==2.0.106
+xmltodict
+requests
+pycryptodome
 pycryptodomex
