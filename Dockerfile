@@ -1,11 +1,17 @@
-FROM python:3.9.6-alpine3.14
+FROM python:3.10-slim
+
+RUN apt update && apt install -y \
+    ffmpeg \
+    aria2 \
+    gcc \
+    libffi-dev \
+    python3-dev \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/*
+
 WORKDIR /app
+COPY requirements.txt .
+RUN pip install --upgrade pip
+RUN pip install -r requirements.txt
 COPY . .
-
-# Install dependencies
-RUN apk add --no-cache gcc libffi-dev musl-dev ffmpeg aria2 \
-    && pip install --no-cache-dir -r requirements.txt \
-    && pip install --no-cache-dir --upgrade pip
-
-# Run the application
-CMD [ "python", "./main.py" ]
+CMD ["python", "main.py"]
