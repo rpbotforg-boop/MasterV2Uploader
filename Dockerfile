@@ -1,17 +1,17 @@
-FROM python:3.10-slim
-
-RUN apt update && apt install -y \
-    ffmpeg \
-    aria2 \
-    gcc \
-    libffi-dev \
-    python3-dev \
-    build-essential \
-    && rm -rf /var/lib/apt/lists/*
+FROM python:3.10-alpine
 
 WORKDIR /app
+
+RUN apk add --no-cache \
+    gcc g++ musl-dev libffi-dev openssl-dev \
+    python3-dev ffmpeg aria2 cargo rust
+
+RUN pip install --upgrade pip setuptools wheel
+
 COPY requirements.txt .
-RUN pip install --upgrade pip
-RUN pip install -r requirements.txt
+
+RUN pip install --no-cache-dir -r requirements.txt
+
 COPY . .
+
 CMD ["python", "main.py"]
